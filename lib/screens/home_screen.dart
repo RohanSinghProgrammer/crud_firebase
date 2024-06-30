@@ -3,14 +3,9 @@ import 'package:crud_firebase/screens/employee_screen.dart';
 import 'package:crud_firebase/services/employee.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,9 +84,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ]),
                       const Expanded(child: SizedBox()),
-                      const Row(children: [
-                        Icon(Icons.edit),
-                        Icon(Icons.delete),
+                      Row(children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.blue,
+                            )),
+                        IconButton(
+                            onPressed: () {},
+                            icon:
+                                const Icon(Icons.delete, color: Colors.orange)),
                       ])
                     ]),
                   )),

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 
 class EmployeeScreen extends StatefulWidget {
-  const EmployeeScreen({super.key});
+  const EmployeeScreen({super.key, this.empMap});
+
+  final Map<String, dynamic>? empMap;
 
   @override
   State<EmployeeScreen> createState() => _EmployeeScreenState();
@@ -15,6 +17,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
+
   // add data function
   void addData() {
     // generate random id
@@ -30,7 +33,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
       Fluttertoast.showToast(
           msg: "Employee added successfully!",
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
+          gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.green,
           textColor: Colors.white,

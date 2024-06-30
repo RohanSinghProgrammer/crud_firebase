@@ -19,6 +19,23 @@ class EmployeeServices {
   }
 
   // UPDATE
+  Future updateEmployee(Map<String, dynamic> employeeInfo, String id) async {
+    try {
+      return await _firestore
+          .collection('Employee')
+          .doc(id)
+          .update(employeeInfo);
+    } catch (e) {
+      return 'Error while adding employee: $e';
+    }
+  }
 
   // DELETE
+    Future deleteEmployee(Map<String, dynamic> employeeInfo, String id) async {
+    try {
+      return await _firestore.collection('Employee').doc(id).delete();
+    } catch (e) {
+      return 'Error while adding employee: $e';
+    }
+  }
 }
