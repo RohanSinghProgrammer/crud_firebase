@@ -1,3 +1,4 @@
+import 'package:crud_firebase/screens/employee_screen.dart';
 import 'package:crud_firebase/services/employee.dart';
 import 'package:crud_firebase/services/toast.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,14 @@ class ListItem extends StatelessWidget {
         .catchError((err) {
       toast.error(err.toString());
     });
+  }
+
+  void editEmployee(BuildContext context, Map<String, dynamic> emp) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EmployeeScreen(employee: emp),
+        ));
   }
 
   @override
@@ -54,7 +63,15 @@ class ListItem extends StatelessWidget {
           const Expanded(child: SizedBox()),
           Row(children: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Map<String, dynamic> emp = {
+                    "name": snapshot.data!.docs[index]["name"],
+                    "age": snapshot.data!.docs[index]["age"],
+                    "location": snapshot.data!.docs[index]["location"],
+                    "id": snapshot.data!.docs[index]["id"]
+                  };
+                  editEmployee(context, emp);
+                },
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blue,

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 
 class EmployeeScreen extends StatefulWidget {
-  const EmployeeScreen({super.key, this.empMap});
+  const EmployeeScreen({super.key, this.employee});
 
-  final Map<String, dynamic>? empMap;
+  final Map<String, dynamic>? employee;
 
   @override
   State<EmployeeScreen> createState() => _EmployeeScreenState();
@@ -17,6 +17,19 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
+  bool isEdit = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.employee != null) {
+      isEdit = true;
+      // setup initial controller values
+      _nameController.text = widget.employee!['name'];
+      _ageController.text = widget.employee!['age'].toString();
+      _locationController.text = widget.employee!['location'];
+    }
+  }
 
   // add data function
   void addData() {
@@ -33,6 +46,29 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     // add data to the database
     EmployeeServices().addEmployee(employeeInfo, id).then((value) {
       toast.success("Employee added successfully!");
+      Navigator.pop(context);
+    });
+    // clear controller valuesRohan si
+    _nameController.clear();
+    _ageController.clear();
+    _locationController.clear();
+  }
+
+  // edit data function
+  void editData() {
+    // generate random id
+    String id = widget.employee!["id"];
+    CustomToast toast = CustomToast();
+    // create a map
+    Map<String, dynamic> employeeInfo = {
+      "id": id,
+      "name": _nameController.text,
+      "age": _ageController.text,
+      "location": _locationController.text,
+    };
+    // add data to the database
+    EmployeeServices().updateEmployee(employeeInfo, id).then((value) {
+      toast.success("Employee updated successfully!");
       Navigator.pop(context);
     });
     // clear controller valuesRohan si
@@ -100,12 +136,12 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8)),
                           ),
-                          onPressed: addData,
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 16),
+                          onPressed: isEdit ? editData : addData,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
                             child: Text(
-                              "Add Employee",
-                              style: TextStyle(
+                              isEdit ? "Update Employee" : "Add Employee",
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18),
