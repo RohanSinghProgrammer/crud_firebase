@@ -1,10 +1,24 @@
+import 'package:crud_firebase/services/employee.dart';
+import 'package:crud_firebase/services/toast.dart';
 import 'package:flutter/material.dart';
 
 class ListItem extends StatelessWidget {
-  const ListItem({super.key, required this.snapshot, required this.index});
+  ListItem({super.key, required this.snapshot, required this.index});
 
   final dynamic snapshot;
   final int index;
+
+  EmployeeServices employee = EmployeeServices();
+  CustomToast toast = CustomToast();
+
+  void deleteEmployee(String id) {
+    employee
+        .deleteEmployee(id)
+        .then((value) => toast.success("Employee deleted successfully!"))
+        .catchError((err) {
+      toast.error(err.toString());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +26,7 @@ class ListItem extends StatelessWidget {
       margin: const EdgeInsets.all(16),
       child: Card(
           child: Padding(
-        padding: EdgeInsets.all(14),
+        padding: const EdgeInsets.all(14),
         child: Row(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
@@ -46,12 +60,12 @@ class ListItem extends StatelessWidget {
                   color: Colors.blue,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () =>
+                    deleteEmployee(snapshot.data!.docs[index]["id"]),
                 icon: const Icon(Icons.delete, color: Colors.orange)),
           ])
         ]),
       )),
     );
-    ;
   }
 }

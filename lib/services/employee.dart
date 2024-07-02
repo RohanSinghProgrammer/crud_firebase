@@ -31,7 +31,7 @@ class EmployeeServices {
   }
 
   // DELETE
-    Future deleteEmployee(Map<String, dynamic> employeeInfo, String id) async {
+    Future deleteEmployee(String id) async {
     try {
       return await _firestore.collection('Employee').doc(id).delete();
     } catch (e) {

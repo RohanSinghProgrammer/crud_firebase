@@ -1,5 +1,4 @@
 import 'package:crud_firebase/services/toast.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:crud_firebase/services/employee.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
@@ -26,6 +25,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     CustomToast toast = CustomToast();
     // create a map
     Map<String, dynamic> employeeInfo = {
+      "id": id,
       "name": _nameController.text,
       "age": _ageController.text,
       "location": _locationController.text,
