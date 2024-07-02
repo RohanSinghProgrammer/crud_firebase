@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_firebase/screens/employee_screen.dart';
 import 'package:crud_firebase/services/employee.dart';
+import 'package:crud_firebase/widgets/list_item.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -52,53 +53,7 @@ class HomeScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.all(16),
-                  child: Card(
-                      child: Padding(
-                    padding: EdgeInsets.all(14),
-                    child: Row(children: [
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Name: ${snapshot.data!.docs[index]["name"]}",
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue),
-                            ),
-                            Text(
-                              "Age: ${snapshot.data!.docs[index]["age"]}",
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange),
-                            ),
-                            Text(
-                              "Location: ${snapshot.data!.docs[index]["location"]}",
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue),
-                            ),
-                          ]),
-                      const Expanded(child: SizedBox()),
-                      Row(children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.edit,
-                              color: Colors.blue,
-                            )),
-                        IconButton(
-                            onPressed: () {},
-                            icon:
-                                const Icon(Icons.delete, color: Colors.orange)),
-                      ])
-                    ]),
-                  )),
-                );
+                return ListItem(snapshot: snapshot, index: index);
               },
             );
           }),

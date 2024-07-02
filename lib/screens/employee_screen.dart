@@ -1,3 +1,4 @@
+import 'package:crud_firebase/services/toast.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:crud_firebase/services/employee.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
   void addData() {
     // generate random id
     String id = randomAlphaNumeric(10);
+    CustomToast toast = CustomToast();
     // create a map
     Map<String, dynamic> employeeInfo = {
       "name": _nameController.text,
@@ -30,14 +32,8 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
     };
     // add data to the database
     EmployeeServices().addEmployee(employeeInfo, id).then((value) {
-      Fluttertoast.showToast(
-          msg: "Employee added successfully!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      toast.success("Employee added successfully!");
+      Navigator.pop(context);
     });
     // clear controller valuesRohan si
     _nameController.clear();
